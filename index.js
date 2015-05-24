@@ -6,7 +6,7 @@ var isNumber = function(n) {
 
 var ipMatch = function(clientIp, list) {
 	if (!clientIp || !Address.isValid(clientIp)) return false;
-	clientIp = Address.parse(clientIp);
+	clientIp = Address.process(clientIp);
 
 	return list.some(function(e) {
 		e = e || '';
