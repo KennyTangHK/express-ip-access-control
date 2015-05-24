@@ -32,7 +32,7 @@ function AccessControl(opts) {
 		denys: [],
 		allows: [],
 		log: function(clientIp, access) {
-			console.log(clientIp + (access ? ' accessed.' : 'denied.'));
+			console.log(clientIp + (access ? ' accessed.' : ' denied.'));
 		},
 		forceConnectionAddress: false,
 		statusCode: 401,
@@ -45,7 +45,7 @@ function AccessControl(opts) {
 	_options.mode = _options.mode === 'allow';
 
 	return function(req, res, next) {
-		var clientIp = _options.forceConnectionIp === true ? req.connection.remoteAddress : req.ip;
+		var clientIp = _options.forceConnectionAddress === true ? req.connection.remoteAddress : req.ip;
 
 		var allow = function() {
 			if (typeof _options.log === 'function') _options.log.apply(null, [clientIp, true]);
