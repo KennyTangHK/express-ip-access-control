@@ -1,12 +1,10 @@
 # Express IP Access Control
 An express.js middleware for access control.
 
----
 ## Installation
 
 `npm install ipaddr.js`
 
----
 ## Feature
 
 * Support **Express**.
@@ -17,7 +15,6 @@ An express.js middleware for access control.
 * Custom action on denied. (**Redirect or show error message**)
 * Custom log function.
 
----
 ## Usage
 
 > If you are not familiar with Express and Express's middleware,
@@ -31,7 +28,6 @@ var accessControl = require('express-ip-access-control');
 
 Create middleware by calling `accessControl(options)` or directly load it into your app by `app.use(accessControl(options))`.
 
----
 ## Options
 
 ```javascript
@@ -89,12 +85,10 @@ The URL to redirect when denied and `statusCode` is set to redirect.
 
 The message sent when denied and `statusCode` is not set to redirect.
 
----
 ## Repository
 
 You may find the source code at [GitHub](https://github.com/KennyTangHK/express-ip-access-control). Please feel free to report bugs and contribute your changes.
 
----
 ## License
 
 [MIT](LICENSE)
