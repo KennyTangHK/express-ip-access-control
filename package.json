@@ -1,6 +1,6 @@
 {
   "name": "express-ip-access-control",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An express.js middleware for access control.",
   "main": "index.js",
   "scripts": {
