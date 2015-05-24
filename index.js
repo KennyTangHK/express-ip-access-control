@@ -45,15 +45,17 @@ function AccessControl(opts) {
 	_options.mode = _options.mode === 'allow';
 
 	return function(req, res, next) {
-		var clientIp = _options.forceConnectionAddress === true ? req.connection.remoteAddress : req.ip;
+		var clientIp = _options.forceConnectionAddress === true
+			? req.connection.remoteAddress
+			: req.ip || req.connection.remoteAddress;
 
 		var allow = function() {
-			if (typeof _options.log === 'function') _options.log.apply(null, [clientIp, true]);
+			if (typeof _options.log === 'function') _options.log.apply(null, [req.ip || req.connection.remoteAddress, true]);
 			next();
 		};
 
 		var deny = function() {
-			if (typeof _options.log === 'function') _options.log.apply(null, [clientIp, false]);
+			if (typeof _options.log === 'function') _options.log.apply(null, [req.ip || req.connection.remoteAddress, false]);
 			if (_options.statusCode === 301 || _options.statusCode === 302) {
 				res.redirect(_options.statusCode, _options.redirectTo);
 			} else {
