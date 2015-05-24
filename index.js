@@ -5,16 +5,24 @@ var isNumber = function(n) {
 };
 
 var ipMatch = function(clientIp, list) {
+	if (!clientIp || !Address.isValid(clientIp)) return false;
+	clientIp = Address.parse(clientIp);
+
 	return list.some(function(e) {
 		e = e || '';
 		e = e.indexOf('/') === -1 ? e + '/128' : e;
 
 		var range = e.split('/');
 		if (range.length === 2 && Address.isValid(range[0]) && isNumber(range[1])) {
-			return Address.parse(clientIp).match(range[0], parseInt(range[1]));
-		} else {
-			return false;
+			var ip = Address.parse(range[0]);
+			var byte = parseInt(range[1], 10);
+
+			if (clientIp.kind() === ip.kind()) {
+				return clientIp.match(ip, byte);
+			}
 		}
+
+		return false;
 	});
 };
 
@@ -53,15 +61,11 @@ function AccessControl(opts) {
 			}
 		};
 
-		if (!clientIp || !Address.isValid(clientIp)) {
+		var inAllows = ipMatch(clientIp, _options.allows), inDenys = ipMatch(clientIp, _options.denys);
+		if ((_options.mode === true && (inAllows && !inDenys) === false) || (_options.mode === false && (inDenys && !inAllows) === true)) {
 			deny();
 		} else {
-			var inAllows = ipMatch(clientIp, _options.allows), inDenys = ipMatch(clientIp, _options.denys);
-			if ((_options.mode === true && (inAllows && !inDenys) === false) || (_options.mode === false && (inDenys && !inAllows) === true)) {
-				deny();
-			} else {
-				allow();
-			}
+			allow();
 		}
 	}
 }
