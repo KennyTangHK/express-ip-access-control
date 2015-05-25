@@ -1,32 +1,29 @@
 # Express IP Access Control
-An express.js middleware for access control.
+An express middleware for access control base on IP addresses.
 
 ## Installation
 
 `npm install ipaddr.js`
 
-## Feature
+## Features
 
-* Support **Express**.
-* Control who can access resources base on IP address.
-* Support **IPv4, IPv6, CIDR format & IPv4 mapped IPv6 addresses** (thanks to [ipaddr.js](https://github.com/whitequark/ipaddr.js)).
-* Deny mode (**Blacklist**) & Allow mode (**Whitelist**), similar [Apache Access Control](https://httpd.apache.org/docs/2.2/howto/access.html).
+* Control who can access resources base on IP addresses.
+* Support **Express 4**.
+* Support **IPv4**, **IPv6**, **CIDR format** & **IPv4 mapped IPv6 addresses** (thanks to [ipaddr.js](https://github.com/whitequark/ipaddr.js)).
+* Deny mode (**Blacklist**) & Allow mode (**Whitelist**), similar to [Apache Access Control](https://httpd.apache.org/docs/2.2/howto/access.html).
 * Choose from **connection address or real address**. You may find it useful if you are behind proxy and needed to reject direct access.
-* Custom action on denied. (**Redirect or show error message**)
+* Custom action on denied. (**Redirect** or **show error message**)
 * Custom log function.
 
 ## Usage
 
-> If you are not familiar with Express and Express's middleware,
-> you are recommended to see these first.
-> * [Express](http://expressjs.com)
-> * [Express's middleware](http://expressjs.com/guide/using-middleware.html)
+> You may want to know somethings about [Express](http://expressjs.com) and [Express's middleware](http://expressjs.com/guide/using-middleware.html) first.
 
 ```javascript
-var accessControl = require('express-ip-access-control');
+var AccessControl = require('express-ip-access-control');
 ```
 
-Create middleware by calling `accessControl(options)` or directly load it into your app by `app.use(accessControl(options))`.
+Create middleware by calling `AccessControl(options)` or directly load it into the app by calling `app.use(AccessControl(options))`.
 
 ## Options
 
@@ -50,40 +47,53 @@ var options = {
 
 #### `'deny'` mode (Blacklist)
 
-Allow by default, only deny IP in the blacklist (`denys`) and not excluded by the whitelist (`allows`).
+Allow by default, only deny IPs in the blacklist (`denys`) and not excluded by the whitelist (`allows`).
 
 #### `'allow'` mode (Whilelist)
 
-Deny by default, only allow IP in the whitelist (`allows`) and not excluded by the blacklist (`denys`).
+Deny by default, only allow IPs in the whitelist (`allows`) and not excluded by the blacklist (`denys`).
 
-### denys (default: [])
+### denys (default: `[]`)
 
-The blacklist. Works differently in different mode.
+The blacklist. Works differently in different mode. Support IPv4, IPv6, CIDR format or mixed. IPv4 mapped IPv6 addresses will be converted into IPv4.
 
-### allows (default: [])
+### allows (default: `[]`)
 
-The whitelist. Works differently in different mode.
+The whitelist. Works differently in different mode. Support IPv4, IPv6, CIDR format or mixed. IPv4 mapped IPv6 addresses will be converted into IPv4.
 
-### forceConnectionAddress (default: false)
+### forceConnectionAddress (default: `false`)
 
-If set to `true`, the connection address (`req.connection.remoteAddress`) will be used even `express.set('trust proxy', [])` is set. So that you can reject direct access if you are behind proxy and needed to do so.
+If set to `true`, the connection address (`req.connection.remoteAddress`) will be used even `express.set('trust proxy', [])` set the `req.ip`. So that you can reject direct access if you are behind proxy and needed to do so.
 
-### log (default: Simple log function)
+### log (default: *Simple log function*)
 
 Pass a log function or `false` to disable log.
 The function should have signature like this `Function(String clientIp, Boolean access)`.
 
-### statusCode (default: 401)
+### statusCode (default: `401`)
 
-The HTTP status code sent when denied. Set to 301 or 302 means redirect to `redirectTo`.
+The HTTP status code sent when denied. Set to `301` or `302` means redirect to `redirectTo`. Will be `parseInt(statusCode, 10)` to ensure it is a integer.
 
-### redirectTo (default: '')
+### redirectTo (default: `''`)
 
-The URL to redirect when denied and `statusCode` is set to redirect.
+The URL to redirect when denied and `statusCode` is set to redirect. It will be passed into [`res.redirect(statusCode, redirectTo)`](http://expressjs.com/4x/api.html#res.redirect) directly, without any validation or manipulation.
 
-### message (default: 'Unauthorized')
+### message (default: `'Unauthorized'`)
 
-The message sent when denied and `statusCode` is not set to redirect.
+The message sent when denied and `statusCode` is not set to redirect. It will be passed into [`res.send(message)`](http://expressjs.com/4x/api.html#res.send) directly, without any validation or manipulation.
+
+## Functions
+
+### ipMatch()
+
+```javascript
+Address.ipMatch(clientIp, list);
+```
+
+Return `true` if `clientIp` is in the `list`, `false` if not.  The function will return `false` if the `clientIp` is not valid or the `list` is empty.
+
+* (String) `clientIp` is the IP address (IPv4 / IPv6) to check. IPv4 mapped IPv6 addresses will be converted into IPv4.
+* (Array of String) `list` is the list / range of IP address. Support IPv4, IPv6, CIDR format or mixed. IPv4 mapped IPv6 addresses will be converted into IPv4.
 
 ## Repository
 
