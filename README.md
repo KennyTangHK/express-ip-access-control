@@ -3,7 +3,7 @@ An express middleware for access control base on IP addresses.
 
 ## Installation
 
-`npm install ipaddr.js`
+> `npm i express-ip-access-control`
 
 ## Features
 
@@ -21,9 +21,15 @@ An express middleware for access control base on IP addresses.
 
 ```javascript
 var AccessControl = require('express-ip-access-control');
-```
 
-Create middleware by calling `AccessControl(options)` or directly load it into the app by calling `app.use(AccessControl(options))`.
+// Create middleware.
+var middleware = AccessControl(options);
+
+// Or directly load it into the app.
+var express = require('express');
+var app = express();
+app.use(AccessControl(options));
+```
 
 ## Options
 
