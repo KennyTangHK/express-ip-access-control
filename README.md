@@ -1,11 +1,14 @@
-# Express IP Access Control
+Express IP Access Control
+=========================
 An express middleware for access control base on IP addresses.
 
-## Installation
+Installation
+------------
 
 > `npm i express-ip-access-control`
 
-## Features
+Features
+--------
 
 * Control who can access resources base on IP addresses.
 * Support **Express 4**.
@@ -15,7 +18,8 @@ An express middleware for access control base on IP addresses.
 * Custom action on denied. (**Redirect** or **show error message**)
 * Custom log function.
 
-## Usage
+Usage
+-----
 
 > You may want to know somethings about [Express](http://expressjs.com) and [Express's middleware](http://expressjs.com/guide/using-middleware.html) first.
 
@@ -31,7 +35,8 @@ var app = express();
 app.use(AccessControl(options));
 ```
 
-## Options
+Options
+-------
 
 ```javascript
 var options = {
@@ -93,7 +98,7 @@ The message sent when denied and `statusCode` is not set to redirect. It will be
 ### ipMatch()
 
 ```javascript
-Address.ipMatch(clientIp, list);
+AccessControl.ipMatch(clientIp, list);
 ```
 
 Return `true` if `clientIp` is in the `list`, `false` if not.  The function will return `false` if the `clientIp` is not valid or the `list` is empty.
@@ -101,10 +106,12 @@ Return `true` if `clientIp` is in the `list`, `false` if not.  The function will
 * (String) `clientIp` is the IP address (IPv4 / IPv6) to check. IPv4 mapped IPv6 addresses will be converted into IPv4.
 * (Array of String) `list` is the list / range of IP address. Support IPv4, IPv6, CIDR format or mixed. IPv4 mapped IPv6 addresses will be converted into IPv4.
 
-## Repository
+Repository
+----------
 
-You may find the source code at [GitHub](https://github.com/KennyTangHK/express-ip-access-control). Please feel free to report bugs and contribute your changes.
+You may find the source code on [GitHub](https://github.com/KennyTangHK/express-ip-access-control). Please feel free to report bugs and contribute your changes.
 
-## License
+License
+-------
 
 [MIT](LICENSE)
