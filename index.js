@@ -84,7 +84,7 @@ function AccessControl(opts) {
 			if (_options.statusCode === 301 || _options.statusCode === 302) {
 				res.redirect(_options.statusCode, _options.redirectTo);
 			} else {
-				res.status(_options.statusCode).send(_options.message).end();
+				res.status(_options.statusCode).send(_options.message);
 			}
 		} else {
 			next();
