@@ -45,7 +45,9 @@ function AccessControl(opts) {
 		// log: Pass a log function or `false` to disable log.
 		// `Function(String clientIp, Boolean access)`
 		log: function(clientIp, access) {
-			console.log(clientIp + (access ? ' accessed.' : ' denied.'));
+			access
+				? console.log(clientIp + ' accessed.')
+				: console.log(clientIp + ' denied.');
 		},
 
 		// statusCode: The HTTP status code sent when denied. Set to 301 or 302 means redirect to `redirectTo`.
@@ -77,7 +79,7 @@ function AccessControl(opts) {
 		var isDenied = (_options.allowMode === true && (inAllows && !inDenys) === false) || (_options.allowMode === false && (inDenys && !inAllows) === true);
 
 		if (typeof _options.log === 'function') {
-			_options.log.apply(null, [req.ip || req.connection.remoteAddress, !isDenied]);
+			_options.log.apply(null, [clientIp, !isDenied]);
 		}
 
 		if (isDenied) {
