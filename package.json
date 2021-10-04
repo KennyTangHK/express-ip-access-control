@@ -11,6 +11,7 @@
     "url": "https://github.com/KennyTangHK/express-ip-access-control.git"
   },
   "keywords": [
+    "express",
     "expressjs",
     "middleware",
     "filter",
@@ -24,6 +25,6 @@
   },
   "homepage": "https://github.com/KennyTangHK/express-ip-access-control",
   "dependencies": {
-    "ipaddr.js": "^1.0.1"
+    "ipaddr.js": "^2.0.1"
   }
 }
