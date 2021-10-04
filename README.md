@@ -12,8 +12,8 @@ Features
 
 * Control who can access resources base on IP addresses.
 * Support **Express 4**.
-* Support **IPv4**, **IPv6**, **CIDR format** & **IPv4 mapped IPv6 addresses** (thanks to [ipaddr.js](https://github.com/whitequark/ipaddr.js)).
-* Deny mode (**Blacklist**) & Allow mode (**Whitelist**), similar to [Apache Access Control](https://httpd.apache.org/docs/2.2/howto/access.html).
+* Support **IPv4**, **IPv6**, **CIDR format** & **IPv4 mapped IPv6 addresses** (using [ipaddr.js](https://github.com/whitequark/ipaddr.js)).
+* Deny mode (**Blacklist**) & Allow mode (**Whitelist**).
 * Choose from **connection address or real address**. You may find it useful if you are behind proxy and needed to reject direct access.
 * Custom action on denied. (**Redirect** or **show error message**)
 * Custom log function.
