@@ -79,7 +79,8 @@ function AccessControl(opts) {
 		var isDenied = (_options.allowMode === true && (inAllows && !inDenys) === false) || (_options.allowMode === false && (inDenys && !inAllows) === true);
 
 		if (typeof _options.log === 'function') {
-			_options.log.apply(null, [clientIp, !isDenied]);
+			// In version v1.1.x, the clientIp is passed into the log function instead.
+			_options.log.apply(null, [req.ip || req.connection.remoteAddress, !isDenied]);
 		}
 
 		if (isDenied) {
