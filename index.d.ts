@@ -2,7 +2,7 @@
  * Create a AccessControl middleware
  * @param options options to configure the middleware
  */
-declare function AccessControl(options?: AccessControl.AclOptions): (res, req, next) => void;
+declare function AccessControl(options?: AccessControl.AclOptions): (res: any, req: any, next: any) => void;
 
 declare namespace AccessControl {
 	/**
